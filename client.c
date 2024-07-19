@@ -10,45 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#include "minitalk.h"
 
-// client.c
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-void send_bit(pid_t server_pid, char c, int bit)
+void	send_bit(pid_t server_pid, char c, int bit)
 {
-    if (bit < 0) return;
-
-    if (c & (1 << bit))
-        kill(server_pid, SIGUSR1);
-    else
-        kill(server_pid, SIGUSR2);
-
-    usleep(100); // Small delay to ensure signals are processed
-
-    send_bit(server_pid, c, bit - 1); // Recursively send the next bit
+	if (bit < 0)
+		return ;
+	if (c & (1 << bit))
+		kill(server_pid, SIGUSR1);
+	else
+		kill(server_pid, SIGUSR2);
+	usleep(100);
+	send_bit(server_pid, c, bit - 1);
 }
 
-void send_char(pid_t server_pid, char c)
+void	send_char(pid_t server_pid, char c)
 {
-    send_bit(server_pid, c, 7); // Start sending from the most significant bit
+	send_bit(server_pid, c, 7);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: %s <server_pid> <message>\n", argv[0]);
-        return 1;
-    }
+	pid_t	server_pid = ft_atoi(argv[1]);
+	char	*message = argv[2];
 
-    pid_t server_pid = atoi(argv[1]);
-    char *message = argv[2];
-
-    while (*message)
-        send_char(server_pid, *message++);
-
-    return 0;
+	if (argc != 3)
+	{
+		ft_printf(stderr, "Usage: %s <server_pid> <message>\n", argv[0]);
+		return (1);
+	}
+	while (*message)
+		send_char(server_pid, *message++);
+	return (0);
 }
+
+// Error: DECL_ASSIGN_LINE     (line:  34, col:  24):	Declaration and assignation on a single line
+// Error: DECL_ASSIGN_LINE     (line:  35, col:  22):	Declaration and assignation on a single line
