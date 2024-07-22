@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdarg.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -69,5 +71,27 @@ int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+//FT_PRINTF//
+int		ft_conversion(va_list args, const char type);
+int		ft_printf(const char *str, ...);
+
+// Conversion functions (NEEDED?)
+int		print_char(char c);
+int		print_str(char *str);
+int		print_ptr(unsigned long long ptr);
+int		print_nbr(int n);
+int		print_unsigned(unsigned int n);
+int		print_hex(unsigned int num, const char type);
+int		print_percent(void);
+
+// Helper functions (NEEDED?)
+int		hex_len(unsigned int num);
+void	put_hex(unsigned int num, const char type);
+int		ptr_len(uintptr_t num);
+void	put_ptr(uintptr_t num);
+int		num_len(unsigned int num);
+char	*unsigned_itoa(unsigned int n);
+void	put_str(char *str);
 
 #endif
