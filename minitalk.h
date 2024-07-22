@@ -19,8 +19,8 @@
 # include <stdio.h>
 # include "libft/libft.h"
 
+void	send_bit(pid_t server_pid, char c, int bit);
 void	send_char(pid_t server_pid, char c);
 void	handle_signal(int signum);
-void	error_exit(const char *message);
 
 #endif

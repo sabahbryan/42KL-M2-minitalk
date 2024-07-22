@@ -31,9 +31,11 @@ void	send_char(pid_t server_pid, char c)
 
 int	main(int argc, char *argv[])
 {
-	pid_t	server_pid = ft_atoi(argv[1]);
-	char	*message = argv[2];
+	pid_t	server_pid;
+	char	*message;
 
+	server_pid = ft_atoi(argv[1]);
+	message = argv[2];
 	if (argc != 3)
 	{
 		ft_printf(stderr, "Usage: %s <server_pid> <message>\n", argv[0]);
@@ -43,6 +45,3 @@ int	main(int argc, char *argv[])
 		send_char(server_pid, *message++);
 	return (0);
 }
-
-// Error: DECL_ASSIGN_LINE     (line:  34, col:  24):	Declaration and assignation on a single line
-// Error: DECL_ASSIGN_LINE     (line:  35, col:  22):	Declaration and assignation on a single line
