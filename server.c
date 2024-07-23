@@ -23,7 +23,6 @@ void	handle_signal(int signum)
 	if (bit == 8)
 	{
 		ft_printf("%c", byte);
-		fflush(stdout);
 		bit = 0;
 		byte = 0;
 	}

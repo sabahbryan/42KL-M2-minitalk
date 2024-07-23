@@ -16,18 +16,19 @@ CLIENT	= client
 
 SERVER	= server
 
-SRCS	=	client.c \
-			server.c \
+SRCS_CLIENT	= client.c
 
-LIBFT	= ./libft/libft.a
+SRCS_SERVER = server.c
 
-OBJS	= ${SRCS:.c=.o}
+LIBFT_DIR = libft
 
-OBJS_CLIENT	= client.o
+LIBFT	= ${LIBFT_DIR}/libft.a
 
-OBJS_SERVER	= server.o
+OBJS_CLIENT	= client.o ${SRCS_CLIENT:.c=.o}
 
-INCLUDES	= -I ./ -I ./libft
+OBJS_SERVER	= server.o ${SRCS_SERVER:.c=.o}
+
+INCLUDES	= -I ./ -I ${LIBFT_DIR}
 
 AR	= ar rcs
 
@@ -40,7 +41,7 @@ CFLAGS	= -Wall -Werror -Wextra
 all: ${CLIENT} ${SERVER}
 
 ${LIBFT}:
-	make -C libft
+	make -C ${LIBFT_DIR}
 
 ${CLIENT}: ${OBJS_CLIENT} ${LIBFT}
 	${GCC} ${CFLAGS} ${OBJS_CLIENT} ${LIBFT} -o ${CLIENT}
@@ -52,13 +53,55 @@ ${SERVER}: ${OBJS_SERVER} ${LIBFT}
 	${GCC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 clean:
-	${RM} ${OBJS}
-	make -C libft clean
+	${RM} ${OBJS_CLIENT} ${OBJS_SERVER}
+	make -C ${LIBFT_DIR} clean
 
 fclean:	clean
 	${RM} ${CLIENT} ${SERVER}
-	make -C libft clean
+	make -C ${LIBFT_DIR} clean
 
 re:	fclean all
 
 .PHONY:	all clean fclean re
+
+# NAME = minitalk
+# CLIENT = client
+# SERVER = server
+# LIBFT_DIR = libft
+# LIBFT = $(LIBFT_DIR)/libft.a
+
+# CC = gcc
+# CFLAGS = -Wall -Wextra -Werror
+# INCLUDES = -I ./ -I $(LIBFT_DIR)
+
+# SRCS_CLIENT = client.c
+# SRCS_SERVER = server.c
+
+# OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
+# OBJS_SERVER = $(SRCS_SERVER:.c:.o)
+
+# all: $(CLIENT) $(SERVER)
+
+# $(LIBFT):
+# 	make -C $(LIBFT_DIR)
+
+# $(CLIENT): $(OBJS_CLIENT) $(LIBFT)
+# 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $(CLIENT)
+
+# $(SERVER): $(OBJS_SERVER) $(LIBFT)
+# 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT) -o $(SERVER)
+
+# %.o: %.c
+# 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# clean:
+# 	rm -f $(OBJS_CLIENT) $(OBJS_SERVER)
+# 	make -C $(LIBFT_DIR) clean
+
+# fclean: clean
+# 	rm -f $(CLIENT) $(SERVER)
+# 	make -C $(LIBFT_DIR) fclean
+
+# re: fclean all
+
+# .PHONY: all clean fclean re

@@ -55,6 +55,10 @@ SRCS	=	ft_isalnum.c \
 			ft_lstlast.c \
 			ft_lstnew.c \
 			ft_lstmap.c \
+			ft_printf.c \
+			ft_printf_utils_1.c \
+			ft_printf_utils_2.c \
+			ft_printf_utils_3.c \
 
 OBJS	= ${addprefix objs/, ${SRCS:.c=.o}}
 
