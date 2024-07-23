@@ -38,7 +38,9 @@ int	main(int argc, char *argv[])
 	message = argv[2];
 	if (argc != 3)
 	{
-		ft_printf(stderr, "Usage: %s <server_pid> <message>\n", argv[0]);
+		ft_putstr_fd("Usage: ", 2);
+		ft_putstr_fd(argv[0], 2);
+		ft_putstr_fd(" <server_pid> <message>\n", 2);
 		return (1);
 	}
 	while (*message)

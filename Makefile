@@ -10,16 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
+NAME	= minitalk
+
+CLIENT	= client
+
+SERVER	= server
 
 SRCS	=	client.c \
 			server.c \
 
-LIBFT	= ./libft/
+LIBFT	= ./libft/libft.a
 
-LIBFT_A = ./libft/libft.a
+OBJS	= ${SRCS:.c=.o}
 
-OBJS	= ${addprefix objs/, ${SRCS:.c=.o}}
+OBJS_CLIENT	= client.o
+
+OBJS_SERVER	= server.o
+
+INCLUDES	= -I ./ -I ./libft
 
 AR	= ar rcs
 
@@ -29,21 +37,27 @@ GCC	= gcc
 
 CFLAGS	= -Wall -Werror -Wextra
 
-all: ${NAME}
+all: ${CLIENT} ${SERVER}
 
-objs/%.o: %.c
-	mkdir -p objs
-	${GCC} ${CFLAGS} -c $< -o $@
+${LIBFT}:
+	make -C libft
 
-${NAME}:	${OBJS}
-			make -C ${LIBFT}
-			${AR} $@ ${OBJS}
+${CLIENT}: ${OBJS_CLIENT} ${LIBFT}
+	${GCC} ${CFLAGS} ${OBJS_CLIENT} ${LIBFT} -o ${CLIENT}
+
+${SERVER}: ${OBJS_SERVER} ${LIBFT}
+	${GCC} ${CFLAGS} ${OBJS_SERVER} ${LIBFT} -o ${SERVER}
+
+%.o: %.c
+	${GCC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 clean:
 	${RM} ${OBJS}
+	make -C libft clean
 
 fclean:	clean
-	${RM} ${NAME}
+	${RM} ${CLIENT} ${SERVER}
+	make -C libft clean
 
 re:	fclean all
 
