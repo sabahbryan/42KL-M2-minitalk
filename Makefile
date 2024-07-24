@@ -24,9 +24,9 @@ LIBFT_DIR = libft
 
 LIBFT	= ${LIBFT_DIR}/libft.a
 
-OBJS_CLIENT	= client.o ${SRCS_CLIENT:.c=.o}
+OBJS_CLIENT	= ${SRCS_CLIENT:.c=.o}
 
-OBJS_SERVER	= server.o ${SRCS_SERVER:.c=.o}
+OBJS_SERVER	= ${SRCS_SERVER:.c=.o}
 
 INCLUDES	= -I ./ -I ${LIBFT_DIR}
 

@@ -12,17 +12,37 @@
 
 #include "minitalk.h"
 
+// void	handle_signal(int signum)
+// {
+// 	static int	bit = 0;
+// 	static int	byte = 0;
+
+// 	if (signum == SIGUSR1)
+// 		byte |= (1 << bit);
+// 	bit++;
+// 	if (bit == 8)
+// 	{
+// 		ft_printf("%c", byte);
+// 		bit = 0;
+// 		byte = 0;
+// 	}
+// }
+
+//reverse bit order
 void	handle_signal(int signum)
 {
 	static int	bit = 0;
 	static int	byte = 0;
 
 	if (signum == SIGUSR1)
-		byte |= (1 << bit);
+		byte |= (1 << (7 - bit));
 	bit++;
 	if (bit == 8)
 	{
-		ft_printf("%c", byte);
+		if (byte == '\0')
+			ft_printf("\n");
+		else
+			ft_printf("%c", byte);
 		bit = 0;
 		byte = 0;
 	}
