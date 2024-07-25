@@ -34,15 +34,15 @@ int	main(int argc, char *argv[])
 	pid_t	server_pid;
 	char	*message;
 
-	server_pid = ft_atoi(argv[1]);
-	message = argv[2];
 	if (argc != 3)
 	{
-		ft_putstr_fd("Usage: ", 2);
-		ft_putstr_fd(argv[0], 2);
-		ft_putstr_fd(" <server_pid> <message>\n", 2);
+		//ft_putstr_fd("Usage: ", 2);
+		//ft_putstr_fd(argv[0], 2);
+		ft_putstr_fd("Error! Correct format: ./client <pid> <message>\n", 2);
 		return (1);
 	}
+	server_pid = ft_atoi(argv[1]);
+	message = argv[2];
 	while (*message)
 		send_char(server_pid, *message++);
 	send_char(server_pid, '\0');
