@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 16:48:04 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/07/17 16:48:12 by bryaloo          ###   ########.fr       */
+/*   Created: 2024/07/26 21:45:42 by bryaloo           #+#    #+#             */
+/*   Updated: 2024/07/26 21:45:47 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
+
+void	handle_ack(int signum)
+{
+	(void)signum;
+}
 
 void	send_bit(pid_t server_pid, char c, int bit)
 {
@@ -21,6 +26,7 @@ void	send_bit(pid_t server_pid, char c, int bit)
 	else
 		kill(server_pid, SIGUSR2);
 	usleep(100);
+	pause();
 	send_bit(server_pid, c, bit - 1);
 }
 
@@ -57,6 +63,12 @@ int	main(int argc, char *argv[])
 	}
 	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
+
+	struct	sigaction sa_ack;
+	sa_ack.sa_handler = handle_ack;
+	sigemptyset(&sa_ack.sa_mask);
+	sa_ack.sa_flags = SA_RESTART;
+	sigaction(SIGUSR1, &sa_ack, NULL);
 	while (*message)
 		send_char(server_pid, *message++);
 	send_char(server_pid, '\0');

@@ -16,9 +16,17 @@ CLIENT	= client
 
 SERVER	= server
 
+CLIENT_BONUS = client_bonus
+
+SERVER_BONUS = server_bonus
+
 SRCS_CLIENT	= client.c
 
 SRCS_SERVER = server.c
+
+SRCS_CLIENT_BONUS = client_bonus.c
+
+SRCS_SERVER_BONUS = server_bonus.c
 
 LIBFT_DIR = libft
 
@@ -27,6 +35,10 @@ LIBFT	= ${LIBFT_DIR}/libft.a
 OBJS_CLIENT	= ${SRCS_CLIENT:.c=.o}
 
 OBJS_SERVER	= ${SRCS_SERVER:.c=.o}
+
+OBJS_CLIENT_BONUS = ${SRCS_CLIENT_BONUS:.c=.o}
+
+OBJS_SERVER_BONUS = ${SRCS_SERVER_BONUS:.c=.o}
 
 INCLUDES	= -I ./ -I ${LIBFT_DIR}
 
@@ -39,6 +51,7 @@ GCC	= gcc
 CFLAGS	= -Wall -Werror -Wextra
 
 all: ${CLIENT} ${SERVER}
+bonus: ${CLIENT_BONUS} ${SERVER_BONUS}
 
 ${LIBFT}:
 	make -C ${LIBFT_DIR}
@@ -49,59 +62,79 @@ ${CLIENT}: ${OBJS_CLIENT} ${LIBFT}
 ${SERVER}: ${OBJS_SERVER} ${LIBFT}
 	${GCC} ${CFLAGS} ${OBJS_SERVER} ${LIBFT} -o ${SERVER}
 
+${CLIENT_BONUS}: ${OBJS_CLIENT_BONUS} ${LIBFT}
+	${GCC} ${CFLAGS} ${OBJS_CLIENT_BONUS} ${LIBFT} -o ${CLIENT_BONUS}
+
+${SERVER_BONUS}: ${OBJS_SERVER_BONUS} ${LIBFT}
+	${GCC} ${CFLAGS} ${OBJS_SERVER_BONUS} ${LIBFT} -o ${SERVER_BONUS}
+
 %.o: %.c
 	${GCC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 clean:
 	${RM} ${OBJS_CLIENT} ${OBJS_SERVER}
+	${RM} ${OBJS_CLIENT_BONUS} ${OBJS_SERVER_BONUS}
 	make -C ${LIBFT_DIR} clean
 
 fclean:	clean
-	${RM} ${CLIENT} ${SERVER}
+	${RM} ${CLIENT} ${SERVER} ${CLIENT_BONUS} ${SERVER_BONUS}
 	make -C ${LIBFT_DIR} clean
 
 re:	fclean all
 
 .PHONY:	all clean fclean re
 
-# NAME = minitalk
-# CLIENT = client
-# SERVER = server
-# LIBFT_DIR = libft
-# LIBFT = $(LIBFT_DIR)/libft.a
+# NO_BONUS
+# NAME	= minitalk
 
-# CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
-# INCLUDES = -I ./ -I $(LIBFT_DIR)
+# CLIENT	= client
 
-# SRCS_CLIENT = client.c
+# SERVER	= server
+
+# SRCS_CLIENT	= client.c
+
 # SRCS_SERVER = server.c
 
-# OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
-# OBJS_SERVER = $(SRCS_SERVER:.c:.o)
+# LIBFT_DIR = libft
 
-# all: $(CLIENT) $(SERVER)
+# LIBFT	= ${LIBFT_DIR}/libft.a
 
-# $(LIBFT):
-# 	make -C $(LIBFT_DIR)
+# OBJS_CLIENT	= ${SRCS_CLIENT:.c=.o}
 
-# $(CLIENT): $(OBJS_CLIENT) $(LIBFT)
-# 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $(CLIENT)
+# OBJS_SERVER	= ${SRCS_SERVER:.c=.o}
 
-# $(SERVER): $(OBJS_SERVER) $(LIBFT)
-# 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT) -o $(SERVER)
+# INCLUDES	= -I ./ -I ${LIBFT_DIR}
+
+# AR	= ar rcs
+
+# RM	= rm -f
+
+# GCC	= gcc
+
+# CFLAGS	= -Wall -Werror -Wextra
+
+# all: ${CLIENT} ${SERVER}
+
+# ${LIBFT}:
+# 	make -C ${LIBFT_DIR}
+
+# ${CLIENT}: ${OBJS_CLIENT} ${LIBFT}
+# 	${GCC} ${CFLAGS} ${OBJS_CLIENT} ${LIBFT} -o ${CLIENT}
+
+# ${SERVER}: ${OBJS_SERVER} ${LIBFT}
+# 	${GCC} ${CFLAGS} ${OBJS_SERVER} ${LIBFT} -o ${SERVER}
 
 # %.o: %.c
-# 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# 	${GCC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 # clean:
-# 	rm -f $(OBJS_CLIENT) $(OBJS_SERVER)
-# 	make -C $(LIBFT_DIR) clean
+# 	${RM} ${OBJS_CLIENT} ${OBJS_SERVER}
+# 	make -C ${LIBFT_DIR} clean
 
-# fclean: clean
-# 	rm -f $(CLIENT) $(SERVER)
-# 	make -C $(LIBFT_DIR) fclean
+# fclean:	clean
+# 	${RM} ${CLIENT} ${SERVER}
+# 	make -C ${LIBFT_DIR} clean
 
-# re: fclean all
+# re:	fclean all
 
-# .PHONY: all clean fclean re
+# .PHONY:	all clean fclean re
