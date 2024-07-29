@@ -16,6 +16,7 @@ void	handle_signal(int signum, siginfo_t *info, void *context)
 {
 	static int	bit = 0;
 	static int	byte = 0;
+	pid_t		client_pid = info->si_pid;
 
 	(void)context;
 	if (signum == SIGUSR1)
@@ -29,9 +30,30 @@ void	handle_signal(int signum, siginfo_t *info, void *context)
 			ft_printf("%c", byte);
 		bit = 0;
 		byte = 0;
-		kill(info->si_pid, SIGUSR1);
 	}
+	kill(client_pid, SIGUSR1);
 }
+
+// void	handle_signal(int signum, siginfo_t *info, void *context)
+// {
+// 	static int	bit = 0;
+// 	static int	byte = 0;
+
+// 	(void)context;
+// 	if (signum == SIGUSR1)
+// 		byte |= (1 << (7 - bit));
+// 	bit++;
+// 	if (bit == 8)
+// 	{
+// 		if (byte == '\0')
+// 			ft_printf("\n");
+// 		else
+// 			ft_printf("%c", byte);
+// 		bit = 0;
+// 		byte = 0;
+// 		kill(info->si_pid, SIGUSR1);
+// 	}
+// }
 
 int	main(void)
 {

@@ -12,9 +12,13 @@
 
 #include "minitalk_bonus.h"
 
+volatile	sig_atomic_t	g_acknowledged = 0;
+
 void	handle_ack(int signum)
 {
 	(void)signum;
+	ft_printf("Message acknowledged by server.\n");
+	g_acknowledged = 1;
 }
 
 void	send_bit(pid_t server_pid, char c, int bit)
@@ -70,7 +74,15 @@ int	main(int argc, char *argv[])
 	sa_ack.sa_flags = SA_RESTART;
 	sigaction(SIGUSR1, &sa_ack, NULL);
 	while (*message)
+	{
+		g_acknowledged = 0;
 		send_char(server_pid, *message++);
+		while (!g_acknowledged)
+			pause();
+	}
+	g_acknowledged = 0;
 	send_char(server_pid, '\0');
+	while (!g_acknowledged)
+		pause();
 	return (0);
 }
