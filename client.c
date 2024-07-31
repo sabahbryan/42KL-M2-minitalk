@@ -12,6 +12,13 @@
 
 #include "minitalk.h"
 
+/**
+ * @brief	sends a single bit to the server
+ * @param	server_pid	process ID of the server
+ * @param	c			character to send
+ * @param	bit			current bit (from 7 to 0) position to send
+ * @return	none. recursively calls itself until all signals are sent
+ */
 void	send_bit(pid_t server_pid, char c, int bit)
 {
 	if (bit < 0)
@@ -24,11 +31,23 @@ void	send_bit(pid_t server_pid, char c, int bit)
 	send_bit(server_pid, c, bit - 1);
 }
 
+/**
+ * @brief	sends character to the server
+ * @param	server_pid	process ID of the server
+ * @param	c			character to send
+ * @return	none.
+ */
 void	send_char(pid_t server_pid, char c)
 {
 	send_bit(server_pid, c, 7);
 }
 
+/**
+ * @brief	checks if the string consists only of digit characters
+ * @param	str	string to check for digits
+ * @var		i	loop counter to iterate over the string
+ * @return	returns true if all characters are digits
+ */
 int	is_digit_str(const char *str)
 {
 	int	i;
@@ -45,6 +64,14 @@ int	is_digit_str(const char *str)
 	return (1);
 }
 
+/**
+ * @brief	entry point of client program
+ * @param	argc		number of command-line arguments
+ * @param	argv		array of command-line arguments
+ * @var		server_pid	process ID of the server
+ * @var		message		messsage string to be sent
+ * @return	returns 0 upon successful execution, 1 for error
+ */
 int	main(int argc, char *argv[])
 {
 	pid_t	server_pid;

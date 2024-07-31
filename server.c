@@ -12,23 +12,15 @@
 
 #include "minitalk.h"
 
-// void	handle_signal(int signum)
-// {
-// 	static int	bit = 0;
-// 	static int	byte = 0;
-
-// 	if (signum == SIGUSR1)
 // 		byte |= (1 << bit);
-// 	bit++;
-// 	if (bit == 8)
-// 	{
-// 		ft_printf("%c", byte);
-// 		bit = 0;
-// 		byte = 0;
-// 	}
-// }
 
-//reverse bit order
+/**
+ * @brief	handles incoming signals and reconstructs the received characters
+ * @param	signum	signal number received by handlers SIGUSR1 or SIGUSR2
+ * @var		bit		keeps track of the current bit being processed
+ * @var		byte	accumulates the bits to form a complete byte
+ * @return	none.
+ */
 void	handle_signal(int signum)
 {
 	static int	bit = 0;
@@ -48,6 +40,13 @@ void	handle_signal(int signum)
 	}
 }
 
+/**
+ * @brief	entry point of the server program
+ * @param	none
+ * @var		pid		server process ID
+ * @var		sa		structure used to define the signal handling behavior
+ * @return	enters infinite loop using 'pause' to wait for signals
+ */
 int	main(void)
 {
 	pid_t				pid;
