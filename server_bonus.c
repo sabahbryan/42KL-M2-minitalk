@@ -12,6 +12,45 @@
 
 #include "minitalk_bonus.h"
 
+void	handle_signal(int signum)
+{
+	static int	bit = 0;
+	static int	byte = 0;
+
+	if (signum == SIGUSR1)
+		byte |= (1 << (7 - bit));
+	bit++;
+	if (bit == 8)
+	{
+		if (byte == '\0')
+			ft_printf("\n");
+		else
+			ft_printf("%c", byte);
+		bit = 0;
+		byte = 0;
+		//kill(info->si_pid, SIGUSR2);
+	}
+}
+//exit(EXIT_SUCCESS);
+
+int	main(void)
+{
+	pid_t				pid;
+	struct sigaction	sa;
+
+	pid = getpid();
+	ft_printf("Server PID: %d\n", pid);
+	sa.sa_handler = handle_signal;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	while (1)
+		pause();
+	return (0);
+}
+
+/*OLD
 void	handle_signal(int signum, siginfo_t *info, void *context)
 {
 	static int	bit = 0;
@@ -71,3 +110,4 @@ int	main(void)
 		pause();
 	return (0);
 }
+*/
