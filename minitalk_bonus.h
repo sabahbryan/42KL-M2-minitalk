@@ -19,9 +19,10 @@
 # include <stdio.h>
 # include "libft/libft.h"
 
-void	handle_ack(int signum);
+//void	ft_confirm(int signal);
 void	send_bit(pid_t server_pid, char c, int bit);
 void	send_char(pid_t server_pid, char c);
-void	handle_signal(int signum, siginfo_t *info, void *context);
+void	handle_signal(int signum);
+//void	handle_signal(int signum, siginfo_t *info, void *context);
 
 #endif
