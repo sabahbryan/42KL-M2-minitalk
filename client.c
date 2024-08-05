@@ -30,6 +30,11 @@ void	send_bit(pid_t server_pid, char c, int bit)
 	usleep(100);
 	send_bit(server_pid, c, bit - 1);
 }
+// if (bit < 0), function returns, ending the recursion
+// bitwise ops: checks if the current bit  in the character c is set (1)
+// if bit is set, sends SIGUSR1 to the server, otherwise sends SIGUSR2
+// usleep call introduces a short delay of 100 microsecond
+// function repeatedly calls itself with the next remaining lower bit
 
 /**
  * @brief	sends character to the server
@@ -41,6 +46,8 @@ void	send_char(pid_t server_pid, char c)
 {
 	send_bit(server_pid, c, 7);
 }
+// initiates the process of sending a character to the server
+// calls send_bit with the highest bit index (7)
 
 /**
  * @brief	checks if the string consists only of digit characters
@@ -63,6 +70,10 @@ int	is_digit_str(const char *str)
 	}
 	return (1);
 }
+// checks if a given string consists entirely of digits
+// verify that the first argument is valid (server PID)
+// returns 0 if the string is NULL or contains non-digit characters
+// returns 1, indicates valid numeric PID in string
 
 /**
  * @brief	entry point of client program
