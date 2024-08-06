@@ -100,3 +100,12 @@ int	main(int argc, char *argv[])
 	send_char(server_pid, '\0');
 	return (0);
 }
+// checks for the correct number of arguments (3)
+// checks if the first argument (server PID) is a number using is_digit_str
+// error handling: if checks fail, error message is printed to stderr and
+//				   the program exits with a non-zero status
+// ft_atoi: converts the server PID argument to an integer
+// assigns the message string to the argv[2]
+// loops through each character in the message, calls send_char to send each
+// character to the server
+// sends "\0" to indicate the end of the message, then returns 0
