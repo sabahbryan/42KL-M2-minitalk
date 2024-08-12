@@ -31,7 +31,7 @@ void	send_bit(pid_t server_pid, char c, int bit)
 	send_bit(server_pid, c, bit - 1);
 }
 // if (bit < 0), function returns, ending the recursion
-// bitwise ops: checks if the current bit  in the character c is set (1)
+// bitwise ops: checks if the current bit in the character c is set (1)
 // if bit is set, sends SIGUSR1 to the server, otherwise sends SIGUSR2
 // usleep call introduces a short delay of 100 microsecond
 // function repeatedly calls itself with the next remaining lower bit

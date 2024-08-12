@@ -37,6 +37,20 @@ void	handle_signal(int signum)
 		byte = 0;
 	}
 }
+// (1 << (7 - bit)): if the signal received is SIGUSR1, it indicates binary "1"
+//					 corresponding bit is set in the byte
+// SIGUSR2 implicitly indicates binary "0" (default state)
+// when (bit == 8), a complete byte (character) has been received
+// prints newline at end of message (byte == '\0')
+// otherwise prints the character represented by byte using ft_printf
+// reset "bit" and "byte" to 0 for receiving the next character
+// BITS
+// (1 << (7 - bit)): correct, first bit is set to MSB (7th), move towards LSB.
+//					 aligns with the order sent by the client.
+//					 reads from left to right.
+// (1 << bit): incorrect, first bit is set to LSB (0th), move towards MSB
+//					 reversed order from what was sent by the client.
+//					 reads from right to left.
 
 /**
  * @brief	entry point of the server program
@@ -61,6 +75,16 @@ int	main(void)
 		pause();
 	return (0);
 }
+// retrieve the server's PID
+// prints the PID to the console for the client to see
+// sa.sa_handler: sets handle_signal as the function to handle incoming signals
+// sa.sa_flags: automatically restarts interrupted system calls
+// sigemptyset: initializes signal set to exclude all signals during the
+//				execution of the signal handler
+// sigaction: register handle_signal as the handler for SIGUSR1 and SIGUSR2
+// pause: 1) puts the server in an infinite loop to wait for signals
+//		  2) server remains idle until a signal is received, triggering the
+//			 signal handler
 
 /*NEW
 void	handle_signal(int signum, siginfo_t *info, void *context)
